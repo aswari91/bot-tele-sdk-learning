@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\TgConfig;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,9 +16,24 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        TgConfig::create([
+            'key' => 'bot_token',
+            'value' => null,
+        ]);
+
+        TgConfig::create([
+            'key' => 'bot_username',
+            'value' => null,
+        ]);
+
+        TgConfig::create([
+            'key' => 'webhook_url',
+            'value' => null,
         ]);
     }
 }
