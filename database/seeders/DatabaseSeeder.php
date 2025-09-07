@@ -16,10 +16,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->create([
+            'name' => 'Aswari',
+            'email' => 'aswari91@gmail.com',
+            'password' => bcrypt('qwerty'),
+        ]);
 
         TgConfig::create([
             'key' => 'bot_token',

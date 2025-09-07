@@ -61,7 +61,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentEditProfilePlugin::make()
-                    ->shouldRegisterNavigation(false),
+                    ->shouldRegisterNavigation(false)
+                    ->customProfileComponents([
+                        \App\Livewire\TelegramConfigComponent::class,
+                    ]),
             ])
             ->userMenuItems([
                 'profile' => Action::make('profile')
@@ -69,6 +72,7 @@ class AdminPanelProvider extends PanelProvider
                     ->label(fn() => auth()->user()->name)
                     ->url(fn(): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle'),
-            ]);
+            ])
+            ->globalSearch(false);
     }
 }
