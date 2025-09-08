@@ -35,6 +35,7 @@ class CatatCommand extends Command
         $signedUrl = \Illuminate\Support\Facades\URL::temporarySignedRoute(
             'bayar-tagihan',
             now()->addMinutes(30),
+            ['tg_chat_id' => $chatId]
         );
 
         $this->replyWithMessage([

@@ -16,7 +16,7 @@ class TelegramController extends Controller
         $text   = trim((string)($message->getText() ?? ''));
         $chatId = $message->getChat()->getId();
 
-        if ($text !== '/catat') {
+        if ($text !== '/catat' && $text !== '/help') {
             Telegram::sendMessage([
                 'chat_id' => $chatId,
                 'text'    => 'Ketik /catat untuk meminta URL catat Tagihan CC.',

@@ -36,9 +36,9 @@ class BayarTagihan extends Component implements HasSchemas, HasActions
 
     public function mount(Request $request): void
     {
-        // if (! $request->hasValidSignature() || $request->query('tg_chat_id')) {
-        //     abort(401);
-        // }
+        if (! $request->hasValidSignature() || !$request->query('tg_chat_id')) {
+            abort(401);
+        }
         $this->user = User::firstWhere('tg_chat_id', $request->query('tg_chat_id'));
         if (! $this->user) {
             abort(404);
@@ -63,7 +63,7 @@ class BayarTagihan extends Component implements HasSchemas, HasActions
                                     ->get()
                                     ->mapWithKeys(function ($tagihan) {
                                         return [
-                                            $tagihan->id => $tagihan->creditCard->card_name . ' **** ' . substr($tagihan->creditCard->card_number, -4),
+                                            $tagihan->id => $tagihan->creditCard->nama_kartu,
                                         ];
                                     })
                                     ->toArray()

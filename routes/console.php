@@ -16,4 +16,4 @@ Schedule::command('queue:work --queue=default --stop-when-empty')
 
 // Schedule::command('tg:bot-reminder')->twiceDaily(8, 20);
 Schedule::command('tg:bot-reminder')
-    ->everySecond();
+    ->twiceDaily(8, 20);
