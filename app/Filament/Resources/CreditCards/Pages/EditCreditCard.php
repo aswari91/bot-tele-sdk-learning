@@ -18,4 +18,10 @@ class EditCreditCard extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $data['total_anualfee'] = (float) str_replace([',', 'Rp', ' '], '', $data['total_anualfee']);
+        return $data;
+    }
 }

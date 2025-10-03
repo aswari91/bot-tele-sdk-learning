@@ -14,6 +14,8 @@ class CreditCard extends Model
         'due_date',
         'closing_date',
         'is_active',
+        'have_anualfee',
+        'total_anualfee',
     ];
 
     public function user()

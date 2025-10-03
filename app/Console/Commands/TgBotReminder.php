@@ -27,6 +27,21 @@ class TgBotReminder extends Command
     {
         $users = \App\Models\User::whereNotNull('tg_chat_id')->get();
         foreach ($users as $user) {
+            $creditCards = \App\Models\CreditCard::where('user_id', $user->id)
+                ->where('have_anualfee', true)
+                ->get();
+
+            if (!$creditCards->isEmpty()) {
+                $anualFeeMessage = "Berikut adalah kartu kredit Anda yang memiliki biaya tahunan:\n\n";
+                foreach ($creditCards as $card) {
+                    $anualFeeMessage .= "- CC info : " . $card->card_name . "\n";
+                    $anualFeeMessage .= "  Total biaya tahunan: Rp " . number_format($card->anual_fee, 0, ',', '.') . "\n\n";
+                }
+                $anualFeeMessage .= "-----------------------------------------\n";
+                $job = new \App\Jobs\sendReminder($user->tg_chat_id, $anualFeeMessage);
+                dispatch($job);
+            }
+
             $now = now();
             $oneDay = now()->addDays(1);
 

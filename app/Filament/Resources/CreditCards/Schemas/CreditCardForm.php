@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources\CreditCards\Schemas;
 
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
+use Filament\Support\RawJs;
+use Filament\Actions\Action;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\TextInput;
 
 class CreditCardForm
 {
@@ -41,6 +43,19 @@ class CreditCardForm
                 Toggle::make('is_active')
                     ->default(true)
                     ->required(),
+                TextInput::make('total_anualfee')
+                    ->prefix('Rp ')
+                    ->suffixAction(Action::make('clear')
+                        ->icon('heroicon-o-x-circle')
+                        ->size('sm')
+                        ->action(function (callable $set) {
+                            $set('total_anualfee', '');
+                        }))
+                    ->mask(RawJs::make('$money($input)'))
+                    ->required(),
+                Toggle::make('have_anualfee')
+                    ->label('Have Annual Fee')
+                    ->default(false),
             ]);
     }
 }
