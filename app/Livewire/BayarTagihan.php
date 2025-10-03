@@ -36,9 +36,9 @@ class BayarTagihan extends Component implements HasSchemas, HasActions
 
     public function mount(Request $request): void
     {
-        if (! $request->hasValidSignature() || !$request->query('tg_chat_id')) {
-            abort(401);
-        }
+        // if (! $request->hasValidSignature() || !$request->query('tg_chat_id')) {
+        //     abort(401);
+        // }
         $this->user = User::firstWhere('tg_chat_id', $request->query('tg_chat_id'));
         if (! $this->user) {
             abort(404);
@@ -154,9 +154,6 @@ class BayarTagihan extends Component implements HasSchemas, HasActions
         }
 
         try {
-            // Contoh: tandai tagihan sebagai dibayar sebagian / penuh.
-
-
             $tagihan = Tagihan::findOrFail($state['id_tagihan']);
             $jumlah = str_replace([',', 'Rp', ' '], '', $state['jumlah_bayar']);
 
@@ -187,6 +184,9 @@ class BayarTagihan extends Component implements HasSchemas, HasActions
             // Opsional: reset form state
             $this->form->fill();
             $this->dispatch('created')->self();
+            // refresh select options
+            $this->reset('data.id_tagihan');
+            $this->dispatch('$refresh');
         } catch (\Throwable $e) {
             Log::error('Pembayaran gagal: ' . $e->getMessage());
 

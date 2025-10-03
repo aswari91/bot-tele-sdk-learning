@@ -18,4 +18,12 @@ class EditTagihan extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $data['total_tagihan'] = (float) str_replace([',', 'Rp', ' '], '', $data['total_tagihan']);
+        $data['tagihan_terbayar'] = 0;
+        $data['sisa_tagihan'] = $data['total_tagihan'] - $data['tagihan_terbayar'];
+        return $data;
+    }
 }
